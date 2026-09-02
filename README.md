@@ -24,6 +24,7 @@ The agent is instructed to:
 - avoid repeating checks already proven by the latest evidence
 - prefer exact error text, Workflow and Tracking events, exported XML, logs, and other machine-verifiable artefacts over generic screenshots when they are more decisive
 - inspect direct image attachments visible in the incident's eDocs
+- for every reviewed screenshot, retain all visible evidence in the notes rather than only the immediately relevant detail; if visible detail was missed, retry before any response and surface the screenshot in `FILES COULD NOT BE PARSED: ...` if the missing detail still cannot be captured confidently
 - treat converted spreadsheet text and tables as primary evidence before relying on linked fallback images
 - treat DOCX or PDF conversions that expose `ediprod:///docs/.../images/...` links as reviewable document-image output and open those linked images before classifying the source file as unparsed
 - treat any skipped, unsupported, unreadable, or unparsed attachment as an incomplete evidence review and surface `FILES COULD NOT BE PARSED: ...` in the chat summary
@@ -105,6 +106,7 @@ If you want a standalone version of the response-generation rules without the fu
 ## Operational Notes
 
 - Partial attachment review must not be treated as complete evidence review. If any attachment cannot be reviewed, the warning `FILES COULD NOT BE PARSED: ...` must appear in chat before the final conclusion is drafted.
+- Partial screenshot extraction also counts as incomplete evidence review. If visible screenshot detail was not retained in the notes, reopen the screenshot before any response; if the missing detail still cannot be captured confidently, include that screenshot in `FILES COULD NOT BE PARSED: ...`.
 - Image-only DOCX or PDF evidence may arrive as a converted markdown stub plus linked page images. Those linked `ediprod:///docs/.../images/...` files are part of the review path and must be opened in staged batches before requesting re-exported screenshots.
 - The agent automatically checks whether any recommended client-facing step is feasible for the client's hosting model and access level before including it in the response — this is part of the agent's built-in behaviour and does not require any action from the user.
 - Any client-facing output should be reviewed by a support specialist before sending.

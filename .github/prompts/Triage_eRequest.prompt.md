@@ -10,6 +10,7 @@ Requirements:
 - Identify the active incident or eRequest from the current session context, workspace files, or attached evidence.
 - If the active incident cannot be identified with confidence, stop and ask only for the incident number.
 - Review the available incident text, latest client updates, and attached evidence before recommending any categorisation.
+- Do not treat a screenshot or attachment as reviewed if visible evidence was filtered down to only the immediately relevant detail. If visible detail needed for the categorisation was not retained, retry the attachment before responding; if it still cannot be captured confidently, state that the evidence remains incomplete rather than inferring the missing detail.
 - Output the final recommendation in exactly this four-line format:
 - `Product Area: <value> - <short reason>`
 - `Section: <value> - <short reason>`
