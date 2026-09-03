@@ -281,6 +281,8 @@ If a client says they attached a new eDocs file but that file is not present in 
 - For long multi-page documents, prioritize the pages most likely to contain decisive evidence first (error message, stack trace, result summary, final page), then continue as needed.
 - Treat any skipped, unsupported, unreadable, or unparsed attachment as an evidence gap. Do not base conclusions on unresolved material.
 
+MANDATORY FILE READ TRACKING TABLE — TOP-LEVEL CONTENT: Immediately after every batch of `mcp_ediprod_read-file` calls on eDocs attachments, output an explicit table in chat with one row per file: filename | response type (INLINE CONTENT / WRITTEN TO TEMP FILE) | follow-up `read_file` called (Y/N) | status (READ / PENDING). A response of "Large tool result written to file: <path>" is NOT a completed read — it is a pointer to content that still must be opened with `read_file`. Mark that row PENDING the instant it appears, even if other files in the same batch returned inline content. Do not write `FILES COULD NOT BE PARSED: NONE`, list a file under "attachments reviewed", or proceed to drafting while any row in this table is still PENDING. Root cause: CS02452226 (September 2026) — the SAD Documents PDF returned "written to file" in the same batch where the Pro Forma Invoice PDF returned full inline content; the differing response shape was not noticed, the SAD PDF was never opened via `read_file`, and the completion summary still declared `FILES COULD NOT BE PARSED: NONE`. Caught only when the user asked directly whether both PDFs were fully read.
+
 ### Structured data files (XML, XLSX, TXT, CSV)
 
 - When reviewing an XML, XLSX, TXT, or other structured data attachment, search the parsed content for the specific field names and values from the client's complaint before forming any conclusion. Record whether each was found or not found.
@@ -614,6 +616,7 @@ Before calling any file-creation tool to write the response .txt file, explicitl
 ## Step 9 — Save and Completion Check
 
 - Save the final client-facing response as a .txt file to the designated workspace output folder.
+- COMPLETION CHECK GATE — FILE READ TRACKING TABLE MUST BE RESOLVED: This completion check cannot be satisfied by memory or impression alone. Before writing "attachments successfully reviewed" or `FILES COULD NOT BE PARSED: NONE`, re-open the MANDATORY FILE READ TRACKING TABLE produced earlier and confirm every row shows READ, not PENDING. Any row still PENDING must either be resolved with a follow-up `read_file` call before the final response is written, or the file must be named explicitly in the `FILES COULD NOT BE PARSED:` line — it cannot simply be dropped from both.
 - Before the final chat response to the user, run a mandatory completion check covering:
   - Attachments successfully reviewed
   - Attachments that could not be parsed/viewed (FILES COULD NOT BE PARSED: <comma-separated file names>)
