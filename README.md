@@ -107,6 +107,7 @@ If you want a standalone version of the response-generation rules without the fu
 
 - Partial attachment review must not be treated as complete evidence review. If any attachment cannot be reviewed, the warning `FILES COULD NOT BE PARSED: ...` must appear in chat before the final conclusion is drafted.
 - Partial screenshot extraction also counts as incomplete evidence review. If visible screenshot detail was not retained in the notes, reopen the screenshot before any response; if the missing detail still cannot be captured confidently, include that screenshot in `FILES COULD NOT BE PARSED: ...`.
+- An attachment described as containing screenshots but whose parsed output shows zero embedded image links is treated as an unresolved mismatch signal, not confirmation of a text-only file. Any empty or near-empty parse result is always flagged in `FILES COULD NOT BE PARSED: ...`, with no exceptions.
 - Image-only DOCX or PDF evidence may arrive as a converted markdown stub plus linked page images. Those linked `ediprod:///docs/.../images/...` files are part of the review path and must be opened in staged batches before requesting re-exported screenshots.
 - The agent automatically checks whether any recommended client-facing step is feasible for the client's hosting model and access level before including it in the response — this is part of the agent's built-in behaviour and does not require any action from the user.
 - Any client-facing output should be reviewed by a support specialist before sending.
