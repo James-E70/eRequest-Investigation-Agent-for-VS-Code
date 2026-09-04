@@ -12,6 +12,8 @@ version: 2.0.0
 
 # WiseTech Support Response — Consolidated Skill
 
+KNOWLEDGE UPDATE RULE: Whenever a new guardrail, verified UI path, verified product fact, known failure mode, or workflow rule is confirmed during an investigation, add it to BOTH this file and `.github/copilot-instructions.md` in the same change set (if working inside the full repo), then commit and push. Do not wait for the user to specify which files to update. If only this standalone skill file is available (no repo access), still record the new knowledge here so it isn't lost, and note to the user that `copilot-instructions.md` should be updated too if they have repo access.
+
 ## Goal
 
 - Investigate each issue to the most solved outcome support can reasonably achieve before escalating.
