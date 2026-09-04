@@ -54,23 +54,22 @@ Footer content:
 
 ```
 .github/
-  copilot-instructions.md          # Auto-loaded workspace instructions — mirrors SPSS PROMPT.md exactly
+  copilot-instructions.md          # Auto-loaded workspace instructions — canonical source for all investigation and guardrail rules
   guides/
     kibana-performance-investigation.md   # Technical workflow for Kibana GlobalSearch investigations
   instructions/
     macro-routing.instructions.md  # Auto-routing rule: loads wisetech-macro-assistant skill for macro incidents
   prompts/
-    support-agent.prompt.md        # Reusable prompt for starting support investigations
-    sync-repo-changes.prompt.md    # Prompt for propagating rule changes across all relevant files
+    sync-repo-changes.prompt.md    # Prompt for propagating rule changes across canonical files
     Kibana_Performance_Investigation.prompt.md  # Prompt for Kibana performance investigation workflow
     Triage_eRequest.prompt.md      # Prompt for triaging eRequests
+    Draft_Escalation_Note.prompt.md      # Prompt for drafting an internal escalation note
+    cleanup-incident-txt.prompt.md       # Prompt for deleting incident-related .txt/.b64 artefacts from the workspace
   skills/
     wisetech-macro-assistant/      # Skill for macro creation, debugging, DocBuilder, barcode, and label questions
-    wisetech-support-response-consolidated/  # Self-contained skill for generating client-facing eRequest responses (with embedded macro rules)
+    wisetech-support-response-consolidated/  # Self-contained, standalone twin of copilot-instructions.md — same guardrails, response rules, and pre-save scan, kept in sync in every change set for colleagues who attach it without cloning the repo
 .vscode/
   settings.json                    # Local workspace settings
-SPSS PROMPT.md                     # Primary active prompt — authoritative source for all investigation and guardrail rules
-support-agent-workflow.md          # Repository-tracked workflow notes mirroring operating guardrails
 .gitignore                         # Excludes generated response and escalation .txt artefacts from tracking
 ```
 
@@ -101,7 +100,7 @@ To draft an internal escalation note after completing an investigation, type `/`
 
 To remove old response and escalation `.txt` files from the workspace folder, type `/` in Copilot Chat and select **Clean-Incident-TXT-Files**. This is a useful end-of-day cleanup command to clear out the workspace folder of that day's generated response / escalation note `.txt` files.
 
-If you want a standalone version of the response-generation rules without the full repository setup, the `.github/skills/wisetech-support-response-consolidated/SKILL.md` file is self-contained and can be downloaded and attached independently to any Copilot Chat session.
+If you want a standalone version of the response-generation rules without the full repository setup, the `.github/skills/wisetech-support-response-consolidated/SKILL.md` file is a self-contained twin of `copilot-instructions.md` — the same guardrails, response rules, and pre-save scan, kept in sync in every change set — and can be downloaded and attached independently to any Copilot Chat session.
 
 ## Operational Notes
 
