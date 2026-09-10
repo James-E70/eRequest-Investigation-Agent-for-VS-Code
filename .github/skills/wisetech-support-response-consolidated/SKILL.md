@@ -14,6 +14,8 @@ version: 2.0.0
 
 KNOWLEDGE UPDATE RULE: Whenever a new guardrail, verified UI path, verified product fact, known failure mode, or workflow rule is confirmed during an investigation, add it to BOTH this file and `.github/copilot-instructions.md` in the same change set (if working inside the full repo), then commit and push. Do not wait for the user to specify which files to update. If only this standalone skill file is available (no repo access), still record the new knowledge here so it isn't lost, and note to the user that `copilot-instructions.md` should be updated too if they have repo access.
 
+DIVERGENCE DOCUMENTATION RULE — WORKFLOW-INDEPENDENT: Whenever an edit intentionally creates or preserves content that exists in this file or copilot-instructions.md but is deliberately NOT to be propagated to the other (e.g. content that only makes sense for one file's distribution model or usage pattern), document that specific divergence and the reasoning in `/memories/repo/duplicate-instruction-files.md` in the same change set (if working inside the full repo). This applies no matter how the edit was requested — an explicit sync-repo-changes workflow invocation, an ad-hoc instruction such as "make X change, then commit and push", or any other phrasing. Do not treat documenting the divergence as something that only happens when a specific slash command or prompt file is used.
+
 ## Goal
 
 - Investigate each issue to the most solved outcome support can reasonably achieve before escalating.
@@ -729,13 +731,13 @@ CWRDS PER-MACHINE DEPLOYMENT FOR ENTERPRISE ENVIRONMENTS: For globally-managed o
 
 ### Escalation notes
 
-When the user says `draft an escalation note`, treat it as: create an internal escalation summary that states the issue, lists the evidence already provided, explains why that evidence shows escalation is required, then save as `.txt` to the workspace folder without waiting for another prompt.
+When the user says `draft an escalation note`, treat it as: create an internal escalation summary that states the issue, lists the evidence already provided, explains why that evidence shows escalation is required, then output it directly in the chat message without waiting for another prompt — do not attempt to save a .txt file (see the STANDALONE OUTPUT rule in Step 9).
 
 Internal escalation note formatting rule: use ALL CAPS section headings followed by a blank line and then prose body. Do NOT use `---` or `----` divider lines anywhere in escalation notes. No decorative separators of any kind.
 
 ESCALATION NOTE — EXTERNAL URL CITATION RULE: If any external URLs were fetched during the investigation and those URLs contributed to the client-facing response (used to confirm root cause, support workaround recommendations, or shape the escalation rationale), include those URLs in an EXTERNAL SOURCES VERIFIED DURING INVESTIGATION section of the escalation note. URLs that were checked but did not contribute to the client response content do not need to be included. Root cause: CS02398126 (July 2026) — four external Microsoft sources confirmed the drag event payload regression and informed both the client response and the escalation note.
 
-Do not upload client-facing responses or escalation notes to eDocs. Save them as `.txt` files in the workspace folder only — do not upload to the incident/workitem's eDocs unless the user explicitly asks for that as a one-off exception.
+Do not upload client-facing responses or escalation notes to eDocs. Output them directly in the chat message only (see the STANDALONE OUTPUT rule in Step 9) — do not upload to the incident/workitem's eDocs unless the user explicitly asks for that as a one-off exception.
 
 Never update, append, or add notes to Workflow Tasks unless the user explicitly overrides this rule.
 
@@ -820,7 +822,7 @@ Add each section below in the listed order, with exactly one empty line between 
 
 ## Step 8 — Pre-Save Scan Gate
 
-Before calling any file-creation tool to write the response .txt file, explicitly confirm in chat that all five checks pass. The .txt file must not be created until every check below is explicitly confirmed passed in chat:
+Before outputting the final response in chat, explicitly confirm in chat that all five checks pass. The response must not be output until every check below is explicitly confirmed passed in chat:
 
 1. INLINE URL CHECK — Read every sentence in the response body that names or describes a WiseTech Academy article, Update Note, how-to, FAQ, reference guide, or other eLearning content. Confirm each sentence contains the URL inline using the format `<title or description> - <url>`. Fix any omission in the draft before proceeding. A URL placed only in the footer does not satisfy this check.
 
@@ -832,13 +834,13 @@ Before calling any file-creation tool to write the response .txt file, explicitl
 
 5. CONFIGURATION EXISTENCE CHECK — For every specific CargoWise field, setting, or configuration step recommended as a fix, state in chat what source (WTA article URL, reviewed screenshot, or prior verified product knowledge) confirms it exists and is accessible in the product UI. For steps involving a combination of field values, confirm the specific combination is valid — not just each field individually. Log output alone does not satisfy this check. Tab visibility in a screenshot alone does NOT confirm what fields are on a tab — tab contents must be confirmed via a WTA article describing those fields or a screenshot showing the tab's interior.
 
-6. EXTERNAL URL LINE CHECK — If any external URL fetch failed during the investigation, confirm that a separate `EXTERNAL URL COULD NOT BE PARSED: <urls>` line is present in the planned completion check output. Do NOT accept an inline status note within the EXTERNAL URLS CHECKED line as a substitute. If any fetch failed and this separate line is missing, add it before creating the .txt file.
+6. EXTERNAL URL LINE CHECK — If any external URL fetch failed during the investigation, confirm that a separate `EXTERNAL URL COULD NOT BE PARSED: <urls>` line is present in the planned completion check output. Do NOT accept an inline status note within the EXTERNAL URLS CHECKED line as a substitute. If any fetch failed and this separate line is missing, add it before outputting the final response in chat.
 
 ---
 
 ## Step 9 — Save and Completion Check
 
-- Save the final client-facing response as a .txt file to the designated workspace output folder.
+- STANDALONE OUTPUT — NEVER SAVE A FILE: This skill file is designed to be usable by attaching it directly to a Copilot Chat session, with or without a repository or workspace folder open. Do not save the client-facing response as a .txt file, do not attempt to determine or search for a workspace folder, and do not ask the user where to save it. Always output the complete, final client-facing response directly in the chat message as the deliverable, including the full footer content below the "THE BELOW IS FOR INFORMATION ONLY" separator.
 - COMPLETION CHECK GATE — FILE READ TRACKING TABLE MUST BE RESOLVED: This completion check cannot be satisfied by memory or impression alone. Before writing "attachments successfully reviewed" or `FILES COULD NOT BE PARSED: NONE`, re-open the MANDATORY FILE READ TRACKING TABLE produced earlier and confirm every row shows READ, not PENDING. Any row still PENDING must either be resolved with a follow-up `read_file` call before the final response is written, or the file must be named explicitly in the `FILES COULD NOT BE PARSED:` line — it cannot simply be dropped from both.
 - Before the final chat response to the user, run a mandatory completion check covering:
   - Attachments successfully reviewed
