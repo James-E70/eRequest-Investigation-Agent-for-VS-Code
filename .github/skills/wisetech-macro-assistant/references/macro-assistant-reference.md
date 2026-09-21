@@ -241,6 +241,14 @@ To confirm fields in CargoWise:
 
 Warn that field names can change after upgrades and are module-specific.
 
+## Document / DocBuilder Field Discovery — Do Not Conflate With Insert Macro
+
+The "Insert Macro" right-click option and its "Data Field Map" window are a CW1 on-screen text/HTML macro feature (available on fields such as a Workflow Milestone's Override Message Content). This option does NOT exist inside the Excel-based System Document Elements / Customized Document Elements templates used to build DocBuilder documents and sections — there is no right-click "Insert Macro" inside Excel itself.
+
+To discover or confirm which fields/macros are available for a specific Document/DocBuilder template — including whether a field belongs only to the document's header-level DataSource or is also reachable inside a specific repeating section's bound child collection (e.g. AJLines) — direct the user to the Common Data Source Maps menu instead: right-click the document row in the Document Menus grid of the Customize Document Menus window and select Common Data Source Maps (originally named Data Source Maps). This opens a tree view of Related DataSources, Fields, and Child DataSources, with a Copy Macro button and drag-and-drop support directly into the Excel template.
+
+Do not recommend "Insert Macro"/"Data Field Map" as the discovery method when the context is a Document/DocBuilder Excel template — only use it for on-screen text/HTML macro fields.
+
 ## Final Rules
 
 - Be concise.
