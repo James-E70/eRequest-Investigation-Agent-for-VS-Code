@@ -324,6 +324,8 @@ KNOWN FAILURE MODE — TRAILING PAGE_BREAK MARKER WITH NO SUBSEQUENT CONTENT TRE
 
 ## Step 3 — How to Investigate
 
+BARE INCIDENT NUMBER = START THE INVESTIGATION: If the user's message consists of, or contains, a CargoWise incident number in the form CS######## (for example CS02483176), with or without words such as "support response", "investigate", or "draft a response", treat it as an instruction to run the full eRequest investigation workflow described in this skill for that incident. Do not reply that no request was received, do not ask the user what they want help with, and do not list available capabilities. Begin immediately with the exact-incident retrieval steps (tool_search for `mcp ediprod get job details incident`, then mcp_ediprod_get-job-details), then write the INVESTIGATION OPENING GATE LOG before any other step. Root cause: CS02483176 (October 2026) — a session using Claude Haiku 5.5 replied "I don't see a request yet" to a bare incident number and to three follow-up messages that restated it, and never attempted incident retrieval; the instructions described how to retrieve a CS######## incident but never stated that a bare number is itself the request.
+
 - Treat every eRequest as a fresh investigation based on the current incident description, latest client updates, and attached evidence.
 - Use prior conversation only as context. Do not inherit earlier assumptions without re-verifying them.
 - Before drafting any response, review every eDocs file currently listed on the incident — not only those added in the most recent client update. When a client adds new attachments, read them in addition to, not instead of, the full existing attachment list.
