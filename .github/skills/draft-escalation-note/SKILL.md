@@ -1,8 +1,8 @@
 ---
-name: "Draft Escalation Note"
+name: draft-escalation-note
 description: "Draft an internal escalation note for the active eRequest in the current session and save it as a .txt file in the workspace folder."
+disable-model-invocation: true
 argument-hint: "Optional: add escalation emphasis or any extra context to include"
-agent: "agent"
 ---
 Draft an internal escalation note for the eRequest currently being worked on in this session.
 

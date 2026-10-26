@@ -1,8 +1,8 @@
 ---
-name: "Triage eRequest"
+name: triage-erequest
 description: "Review the active eRequest in the current session and recommend the most appropriate Product Area, Section, and Criticality categorisation."
+disable-model-invocation: true
 argument-hint: "Optional: add any triage context or constraints"
-agent: "agent"
 ---
 Review the eRequest currently being worked on in this session and recommend how it should be triaged.
 

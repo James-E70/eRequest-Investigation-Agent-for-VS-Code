@@ -1,8 +1,8 @@
 ---
-name: "Clean Incident TXT Files"
+name: clean-incident-txt-files
 description: "Delete incident-related text files from the current workspace, including CS*.txt and CS*.b64.txt artifacts."
+disable-model-invocation: true
 argument-hint: "Optional: add exclusions or a different filename pattern"
-agent: "agent"
 ---
 Delete incident-related text artifacts from the current workspace.
 

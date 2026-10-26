@@ -1,10 +1,9 @@
 ---
-name: "Kibana Performance Investigation"
+name: kibana-performance-investigation
 description: "Investigate a WiseCloud client performance incident using Kibana GlobalSearch. Use for SQL lock timeout errors, force-close events, slow save operations, and system-wide blocking events."
+disable-model-invocation: true
 argument-hint: "Provide the CW license code (e.g. MO4SYR), the physical SQL server hostname if known (e.g. us2wp-ssql-438b), and the date/time window to investigate (UTC or ET)"
-agent: "agent"
 ---
-
 Conduct a Kibana GlobalSearch server-side investigation for a WiseCloud performance incident.
 
 ## Requirements

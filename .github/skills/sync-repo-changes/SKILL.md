@@ -1,8 +1,9 @@
 ---
+name: sync-repo-changes
 description: "Use when a workflow rule, guardrail, or behavioral change has been made to any agent file and needs to be propagated to all relevant files and committed to the GitHub repo."
+disable-model-invocation: true
 ---
-
-A change has been made (or a change is described below). Propagate it to every file that needs it, then commit and push to https://github.com/James-E70/VS-Code-Native-Support-Agent.
+A change has been made (or a change is described below). Propagate it to every file that needs it, then commit and push to https://github.com/James-E70/eRequest-Investigation-Agent-for-VS-Code.
 
 ## Files to check and update
 
@@ -13,7 +14,7 @@ Before committing, review each of the following locations and update any that do
 | `SPSS PROMPT.md` | Primary active prompt. The authoritative source for investigation, guardrail, and workflow rules used during live support runs. |
 | `.github/copilot-instructions.md` | Auto-loaded workspace instructions. Must always mirror `SPSS PROMPT.md` exactly — update this file whenever SPSS PROMPT.md changes so that agent sessions pick up the latest rules without manual file attachment. |
 | `support-agent-workflow.md` | Repository-tracked workflow reference. Keep in sync with SPSS PROMPT.md for any rule that affects investigation quality, evidence handling, or response production. |
-| `.github/prompts/support-agent.prompt.md` | Reusable prompt for starting support investigations. Update if the change affects how investigations are initiated or how attachments/incidents are handled. |
+| `.github/skills/*/SKILL.md` | Slash-command skills (draft-escalation-note, triage-erequest, clean-incident-txt-files, kibana-performance-investigation, sync-repo-changes). Update if the change affects how investigations are initiated or how attachments/incidents are handled. |
 | `/memories/support-agent-preferences.md` (user memory) | Persistent cross-workspace agent preferences. Update if the change is a behavioral rule that should apply in all workspaces and conversations, not just this repo. |
 | `/memories/repo/support-agent-workflow.md` (repo memory) | Repo-scoped memory facts. Update if the change is a repo-specific fact, tool behavior note, or environment-specific rule. |
 

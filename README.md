@@ -30,7 +30,7 @@ The agent is instructed to:
 - treat any skipped, unsupported, unreadable, or unparsed attachment as an incomplete evidence review and surface `FILES COULD NOT BE PARSED: ...` in the chat summary
 - never provide unverified UI paths, fields, or assumptions
 - automatically route macro-related incidents to the `wisetech-macro-assistant` skill before analysis begins — this skill is included in this repository under `.github/skills/wisetech-macro-assistant/` and covers macro creation, debugging, DocBuilder expressions, and macros for Workflow and Emails
-- Automatically use the Kibana GlobalSearch investigation workflow (`.github/guides/kibana-performance-investigation.md`) when a WiseCloud-hosted incident involves SQL lock timeouts, force-close events on save, slow performance across multiple users, or system-wide blocking — the prompt at `.github/prompts/Kibana_Performance_Investigation.prompt.md` provides a ready-to-use entry point for this workflow
+- Automatically use the Kibana GlobalSearch investigation workflow (`.github/guides/kibana-performance-investigation.md`) when a WiseCloud-hosted incident involves SQL lock timeouts, force-close events on save, slow performance across multiple users, or system-wide blocking — the skill at `.github/skills/kibana-performance-investigation/SKILL.md` (run as `/kibana-performance-investigation`) provides a ready-to-use entry point for this workflow
 - verify UI paths against WTA user documentation before including them in any client-facing response
 - fire a hard VERSION NUMBER GATE when the next investigation step depends on knowing the client's CargoWise build
 - fire a hard HOSTING GATE when the next investigation step differs between self-hosted and WiseCloud-hosted environments
@@ -59,13 +59,12 @@ Footer content:
     kibana-performance-investigation.md   # Technical workflow for Kibana GlobalSearch investigations
   instructions/
     macro-routing.instructions.md  # Auto-routing rule: loads wisetech-macro-assistant skill for macro incidents
-  prompts/
-    sync-repo-changes.prompt.md    # Prompt for propagating rule changes across canonical files
-    Kibana_Performance_Investigation.prompt.md  # Prompt for Kibana performance investigation workflow
-    Triage_eRequest.prompt.md      # Prompt for triaging eRequests
-    Draft_Escalation_Note.prompt.md      # Prompt for drafting an internal escalation note
-    cleanup-incident-txt.prompt.md       # Prompt for deleting incident-related .txt/.b64 artefacts from the workspace
   skills/
+    clean-incident-txt-files/      # Slash-command skill (/clean-incident-txt-files) for deleting incident-related .txt/.b64 artefacts from the workspace
+    draft-escalation-note/         # Slash-command skill (/draft-escalation-note) for drafting an internal escalation note
+    kibana-performance-investigation/  # Slash-command skill (/kibana-performance-investigation) for the Kibana performance investigation workflow
+    sync-repo-changes/             # Slash-command skill (/sync-repo-changes) for propagating rule changes across canonical files
+    triage-erequest/               # Slash-command skill (/triage-erequest) for triaging eRequests
     wisetech-macro-assistant/      # Skill for macro creation, debugging, DocBuilder, barcode, and label questions
     wisetech-support-response-consolidated/  # Self-contained, standalone twin of copilot-instructions.md — same guardrails, response rules, and pre-save scan, kept in sync in every change set for colleagues who attach it without cloning the repo
 .vscode/
